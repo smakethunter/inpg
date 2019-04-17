@@ -1,0 +1,32 @@
+cmake_minimum_required(VERSION 3.13)
+project(vehile_2)
+
+set(CMAKE_CXX_STANDARD 17)
+add_compile_options(-Wall -Wextra -Werror -Wpedantic -pedantic-errors)
+add_subdirectory(googletest-master)
+include_directories(
+        include
+)
+
+set(SOURCE_FILES
+        src/vehicle-2.cpp
+        )
+
+add_executable(vehile_2__debug ${SOURCE_FILES} vehicle.cpp)
+
+# == Unit testing using Google Testing Framework ==
+
+set(SOURCES_FILES_TESTS
+        test/test_vehicle.cpp
+        )
+
+add_executable(vehile_2__test ${SOURCE_FILES} ${SOURCES_FILES_TESTS} test/main_gtest.cpp)
+
+target_include_directories(vehile_2__test PUBLIC
+        ../../googletest-master/googlemock/include
+        ../../googletest-master/googletest/include
+        )
+
+
+
+target_link_libraries(vehile_2__test gmock)
