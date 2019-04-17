@@ -1,0 +1,59 @@
+
+#include "gtest/gtest.h"
+#include "gmock/gmock.h"
+
+#include "vehicle-2.hpp"
+
+using ::testing::Property;
+TEST(VehicleCarTest,max_speed){
+Car tojotka("Auris", "toyota",Gender::Female, 120);
+EXPECT_EQ(tojotka.get_max_speed(),120);
+}
+TEST(VehicleBikeTest,max_speed){
+    Bicycle Niebieska_strzala("Champion", "Giant",Gender::Female, 8);
+    EXPECT_EQ(Niebieska_strzala.get_max_speed(),24);
+}
+TEST(VehicleTest,compute_min_travel_duration_as_string){
+    Car car1("C1", "",Gender::Female, 100.0);
+   std::string result= compute_min_travel_duration_as_string(100,car1);
+    EXPECT_EQ(result,"<1.000>");
+
+}
+TEST(VehicleCarTest, search_my_name) {
+    Car car1("C1", "",Gender::Female ,100.0);
+    Car car2("C2", "",Gender::Female, 200.0);
+    Bicycle bicycle("B1", "",Gender::Female, 0);
+
+    std::vector<Vehicle *> vehicles = {&car1, &bicycle, &car2};
+    std::string t="C1";
+std::function<bool (Vehicle&)> con=[&t](Vehicle& v){return Contain(t,v,true);};
+
+        auto filtered=filter_vehicles(vehicles.begin(),vehicles.end(),con);
+
+    EXPECT_THAT(filtered, Contains(Property(&Vehicle::get_id, car1.get_id())));
+}
+TEST(VehicleCarTest, to_string) {
+    Car car1("C1", "toyota",Gender::Female, 100.0);
+    Car car2("C2", "VW",Gender::Female, 200.0);
+    Bicycle bicycle("B1", "",Gender::Female, 0);
+
+    std::vector<Vehicle *> vehicles = {&car1, &car2,&bicycle};
+    auto print =to_string(vehicles.begin(), vehicles.end());
+    EXPECT_EQ(print,"<C1> : <toyota>\n<C2> : <VW>\n<B1> : <>\n");
+}
+TEST(VehicleCarTest, gender){
+    Car car("C1", "toyota",Gender::Female, 100.0);
+    EXPECT_EQ(car.get_gender(),Gender::Female);
+}
+TEST(DriverAuxTest, assignVehicleToDriver){
+    std::vector<std::unique_ptr<Vehicle>> v;
+    std::vector<Vehicle*> raw_ptr;
+    v.push_back(std::make_unique<Car>("C1", "",Gender::Female ,100.0));
+    v.push_back(std::make_unique<Bicycle>("B1", "",Gender::Female, 0));
+    std::transform(v.begin(),v.end(),std::back_inserter(raw_ptr),[](auto& v){return v.get();});
+    Driver driver("Katarzyna Wielka");
+    assign_vehicle_to_driver(v, driver);
+    EXPECT_EQ(driver.get_vehicle()->get_id(),"B1");
+    EXPECT_EQ(driver.get_vehicle()->get_gender(),Gender::Female);
+
+}
