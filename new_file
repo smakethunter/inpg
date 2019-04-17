@@ -1,0 +1,6 @@
+//new code in c++
+#include iostream
+int main(){
+std::cout<<"my new proj"<<std::endl;
+return 0;
+}
