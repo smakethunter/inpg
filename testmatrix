@@ -1,0 +1,32 @@
+//
+// Created by wojte on 14.03.2019.
+//
+#include "gtest/gtest.h"
+#include "matlab.hpp"
+
+
+using namespace Matlab;
+TEST(MatlabMatrixTest, to_string){
+    Matrix<int> m(2,2);
+    EXPECT_EQ(to_string(m),"[\n[ 0, 0 ],\n[ 0, 0 ]\n]");
+}
+TEST(MatlabMatrixTest, add) {
+    Matrix<int> m1(std::vector<std::vector<int>>{
+            std::vector<int>{1, 12},
+            std::vector<int>{1, 22}
+    });
+
+    Matrix<int> m2(std::vector<std::vector<int>>{
+            std::vector<int>{1, 12},
+            std::vector<int>{1, 22}
+    });
+    std::string string =to_string(add_matrix(m1,m2));
+    EXPECT_EQ(string ,"[\n[ 2, 24 ],\n[ 2, 44 ]\n]");
+}TEST(MatlabMatrixTest, sum) {
+    Matrix<int> m1(std::vector<std::vector<int>>{
+            std::vector<int>{1, 12},
+            std::vector<int>{1, 22}
+    });
+
+    EXPECT_EQ(m1.sum(),36);
+}
