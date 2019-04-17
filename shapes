@@ -1,0 +1,9 @@
+//
+// Created by wojte on 20.03.2019.
+//
+#include "shapes-1.hpp"
+double calculate_total_area(std::vector<Shape*>& shapes){
+
+   return std::accumulate(shapes.begin(),shapes.end(),0.0,[](double acc, const auto& s){return acc + s->area();});
+
+}
