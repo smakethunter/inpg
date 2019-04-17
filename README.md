@@ -1,0 +1,2 @@
+# inpg
+na zaliczenie przedmiotu
