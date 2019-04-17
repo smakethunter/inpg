@@ -1,0 +1,38 @@
+//
+// Created by wojte on 20.03.2019.
+//
+
+#ifndef SHAPES_1_SHAPES_1_HPP
+#define SHAPES_1_SHAPES_1_HPP
+
+#include <vector>
+#include <math.h>
+#include <algorithm>
+#include <numeric>
+#include <memory>
+const double PI=3.141592;
+class Shape{
+public:
+    Shape(double X, double Y):x(X),y(Y){};
+    virtual double area()=0;
+private:
+    double  x;
+    double y;
+};
+class Square: public Shape{
+public:
+    Square(double X, double Y, double SIDE): Square::Shape(X,Y),side(SIDE){};
+double area()override{ return pow(side,2);};
+private:
+    double side;
+};
+class Circle:public Shape{
+public:
+    Circle(double X, double Y, double r): Circle::Shape(X,Y),radius(r){};
+double area()override{return pow(radius,2)*PI;};
+private:
+    double radius;
+};
+double calculate_total_area(std::vector<Shape*>& shapes);
+
+#endif //SHAPES_1_SHAPES_1_HPP
